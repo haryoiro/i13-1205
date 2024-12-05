@@ -1,0 +1,5 @@
+[init]
+	defaultBranch = main
+[user]
+	email = bot@bot.com
+	name = bot
