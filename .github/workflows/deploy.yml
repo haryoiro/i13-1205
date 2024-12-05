@@ -1,0 +1,53 @@
+name: Deploy to ISUCON SERVER
+
+on:
+  push:
+    branches:
+      # ユーザごとにブランチ切り替えてもいいかも
+      - hodota
+      - seri
+      - shirai
+
+jobs:
+  deploy-seri:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/seri'
+    steps:
+      - name: deploy
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          # カンマ区切りで複数指定可
+          host: ${{ secrets.HOSTA }}
+          username: isucon
+          key: ${{ secrets.DEPLOY_SECRET }}
+          port: 22
+          script: |
+            git pull origin seri && cd webapp/go && make && sudo systemctl restart isupipe-go.service
+  deploy-hodota:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/hodota'
+    steps:
+      - name: deploy
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          # カンマ区切りで複数指定可
+          host: ${{ secrets.HOSTB }}
+          username: isucon
+          key: ${{ secrets.DEPLOY_SECRET }}
+          port: 22
+          script: |
+            git pull origin hodota && cd webapp/go && make && sudo systemctl restart isupipe-go.service
+  deploy-shirai:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/shirai'
+    steps:
+      - name: deploy
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          # カンマ区切りで複数指定可
+          host: ${{ secrets.HOSTC }}
+          username: isucon
+          key: ${{ secrets.DEPLOY_SECRET }}
+          port: 22
+          script: |
+            git pull origin shirai && cd webapp/go && make && sudo systemctl restart isupipe-go.service
