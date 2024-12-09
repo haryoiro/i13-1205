@@ -16,7 +16,7 @@
     "@hono/node-server": "1.2.3",
     "bcrypt": "5.1.1",
     "hono": "3.10.2",
-    "hono-sessions": "0.3.3",
+    "hono-sessions": "0.7.0",
     "mysql2": "3.6.5"
   },
   "devDependencies": {
